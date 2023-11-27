@@ -1,0 +1,32 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Browser extends JFrame {
+    private JTextField addressBar;
+    private JEditorPane display;
+
+    // Constructor
+    public Browser() {
+        setTitle("Java Browser");
+
+        // Address bar
+        addressBar = new JTextField();
+        addressBar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                loadPage(event.getActionCommand());
+            }
+        });
+        add(addressBar, BorderLayout.NORTH);
+
+        // Display pane
+        display = new JEditorPane();
+        display.setEditable(false);
+        display.addHyperlinkListener(new HyperlinkListener() {
+            public void hyperlinkUpdate(HyperlinkEvent event) {
+                if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                    loadPage(event.getURL().toString());
+                }
+            }
+        });
+        add(new JScrollPane(display), BorderLayout.CENTER);
